@@ -9,6 +9,8 @@ function GenerateNumbers() {
             $(this).html(GenerateString(2));
         }else if ($(this).attr('class') === "difficult") {
             $(this).html(GenerateString(3));
+        } else if ($(this).attr('class') === "quad") {
+            $(this).html(GenerateString(4));
         }
     });
 
@@ -38,13 +40,48 @@ function GenerateNumbers() {
         switch (number) {
 
             case 1:
-                equation = getNumber() + "x" + GenerateSymbol(" + ",  " - ") + getNumber() + " = " + getNumber() + "x";
+                equation = getNumber() + "x" + GenerateSymbol(" + ", " - ") + getNumber() + " = " + getNumber() + "x";
                 break;
             case 2:
-                equation = getNumber() + "(" +getNumber()+ "x" + GenerateSymbol(" + ", " - ") + getNumber() + ")" + GenerateSymbol(" + ", " - ") + getNumber() + " = " + getNumber() + "x";
+                equation = getNumber() +
+                    GenBrackets(
+                        getNumber() + "x" +
+                        GenerateSymbol(" + ", " - ") +
+                        getNumber()) +
+                    GenerateSymbol(" + ", " - ") +
+                    getNumber() +
+                    " = " +
+                    getNumber() + "x";
                 break;
             case 3:
-                equation = getNumber() + "(" + getNumber() + "x" + GenerateSymbol(" + ", " - ") + getNumber() + ")" + getNumber() + " = " + getNumber() + "(" + getNumber() + "x" + GenerateSymbol(" + ", " - ") + getNumber() + ")";
+                equation = getNumber() +
+                    GenBrackets(
+                        getNumber() + "x" +
+                        GenerateSymbol(" + ", " - ") +
+                        getNumber()) +
+                    GenerateSymbol(" + ", " - ") +
+                    getNumber() +
+                    " = " +
+                    getNumber() +
+                    GenBrackets(
+                        getNumber() + "x" +
+                        GenerateSymbol(" + ", " - ") +
+                        getNumber());
+                break;
+            case 4:
+                equation = getNumber() + "x" +
+                    GenBrackets(
+                        getNumber() + "x" +
+                        GenerateSymbol(" + ", " - ") +
+                        getNumber()) +
+                    GenerateSymbol(" + ", " - ") +
+                    getNumber() +
+                    " = " +
+                    getNumber() +
+                    GenBrackets(
+                        getNumber() + "x" +
+                        GenerateSymbol(" + ", " - ") +
+                        getNumber());
                 break;
             default:
                 break;
@@ -53,13 +90,10 @@ function GenerateNumbers() {
         return equation;
     }
 
-    // EQUATION TYPES
-    // Ax + Bx = c
-    // Ax + B = Cx
-
-    //A(Dx + E) + B = Cx
-    //A(D + Ex) + B = Cx
-
-    //A(D + Ex) + B = C(Fx + G)
-
+    /**
+     * @return {string}
+     */
+    function GenBrackets(input) {
+        return "(" + input + ")";
+    }
 }
